@@ -1,5 +1,5 @@
 import db from "@/db";
-import { category, city, menuItem, order, restaurant, user } from "@/db/schema";
+import { category, city, menuItem, order, restaurant, user } from "@/db/schema/_index";
 import { and, eq, inArray } from "drizzle-orm";
 
 export const DrizzleService = {
