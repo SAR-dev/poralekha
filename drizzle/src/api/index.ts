@@ -1,18 +1,27 @@
-import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
-import usersRoute from './routes/users'
+import { initTRPC } from '@trpc/server';
+import * as trpcExpress from '@trpc/server/adapters/express';
+import express from 'express';
+import cors from 'cors';
+import env from '@/env';
+import { userRouter } from './routes/users';
 
-const app = new Hono()
+const createContext = ({}: trpcExpress.CreateExpressContextOptions) => ({});
+type Context = Awaited<ReturnType<typeof createContext>>;
+const t = initTRPC.context<Context>().create();
+const appRouter = t.router({
+  user: userRouter
+});
 
-app.get('/', (c) => {
-  return c.text('Welcome From Hono!')
-})
+const app = express();
 
-app.route("/users", usersRoute);
-
-serve({
-  fetch: app.fetch,
-  port: 3000
-}, (info) => {
-  console.log(`Server is running on http://localhost:${info.port}`)
-})
+app.use(
+  '/trpc',
+  cors({
+    origin: env.CLIENT_URL
+  }),
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  }),
+);
+app.listen(4000);

@@ -1,12 +1,13 @@
+import { publicProcedure, router } from "./trpc.js";
 import db from "@/db";
-import { Hono } from "hono";
 
-const usersRoute = new Hono();
-
-// Get all users
-usersRoute.get("/", async (c) => {
-  const allUsers = await db.query.users.findMany();
-  return c.json(allUsers);
+export const userRouter = router({
+  // /trpc/user.userList
+  userList: publicProcedure.query(async () => {
+    const users = await db.query.users.findMany();
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return users;
+  }),
 });
 
-export default usersRoute;
+export type AppRouter = typeof userRouter;
