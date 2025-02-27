@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1740636102159,
+      "tag": "0000_great_invisible_woman",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1740636112910,
+      "tag": "0001_prevent_enrollments_update",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1740636154891,
+      "tag": "0002_prevent_organization_id_update",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1740636211337,
+      "tag": "0003_check_enrollments_batch_student",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1740636255706,
+      "tag": "0004_check_batches_class_package",
+      "breakpoints": true
+    }
+  ]
+}
