@@ -8,7 +8,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "dev:api": "tsx --watch src/api/index.ts",
+    "dev": "tsx watch src/api/index.ts",
     "build": "tsc && tsc-alias",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -21,20 +21,20 @@
     "db:seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
-    "@electric-sql/pglite": "^0.2.17",
-    "@types/express": "5.0.0",
-    "@types/node": "^20.12.12",
     "dotenv": "^16.4.5",
     "dotenv-expand": "^11.0.6",
     "drizzle-orm": "^0.40.0",
     "drizzle-seed": "^0.3.1",
     "drizzle-zod": "^0.5.1",
-    "express": "5.0.0",
+    "hono": "^4.7.2",
     "pg": "^8.11.5",
     "postgres": "^3.4.4",
     "typed-rpc": "^5.0.2"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.2.17",
+    "@hono/node-server": "^1.13.8",
+    "@types/node": "^20.12.12",
     "cross-env": "^7.0.3",
     "drizzle-kit": "^0.30.5",
     "tsc": "^2.0.4",
