@@ -9,21 +9,21 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER prevent_students_organization_id_update_trigger
-BEFORE UPDATE ON students
+BEFORE UPDATE ON p_students
 FOR EACH ROW
 EXECUTE FUNCTION prevent_organization_id_update();
 
 CREATE TRIGGER prevent_teachers_organization_id_update_trigger
-BEFORE UPDATE ON teachers
+BEFORE UPDATE ON p_teachers
 FOR EACH ROW
 EXECUTE FUNCTION prevent_organization_id_update();
 
 CREATE TRIGGER prevent_class_packages_organization_id_update_trigger
-BEFORE UPDATE ON class_packages
+BEFORE UPDATE ON p_class_packages
 FOR EACH ROW
 EXECUTE FUNCTION prevent_organization_id_update();
 
 CREATE TRIGGER prevent_batches_organization_id_update_trigger
-BEFORE UPDATE ON batches
+BEFORE UPDATE ON p_batches
 FOR EACH ROW
 EXECUTE FUNCTION prevent_organization_id_update();

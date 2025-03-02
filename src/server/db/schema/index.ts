@@ -1,4 +1,12 @@
-export { users } from "./users";
+export { 
+    users,
+    usersRelations, 
+    accounts, 
+    accountsRelations,
+    sessions,
+    sessionsRelations,
+    verificationTokens 
+} from './auth';
 export { organizations } from "./organizations";
 export { moderators } from "./moderators";
 export { teachers } from "./teachers";

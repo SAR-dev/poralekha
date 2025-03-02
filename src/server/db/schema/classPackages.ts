@@ -1,10 +1,11 @@
-import { pgTable, integer, varchar, text, timestamp, serial, unique } from 'drizzle-orm/pg-core';
+import { integer, varchar, text, timestamp, unique } from 'drizzle-orm/pg-core';
 import { organizations } from './organizations';
+import { createTable } from './base';
 
-export const classPackages = pgTable('class_packages', {
-    id: serial('id').primaryKey(),
+export const classPackages = createTable('class_packages', {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
     name: varchar('name').notNull(),
-    organizationId: integer('organization_id').notNull().references(() => organizations.id),
+    organizationId: text('organization_id').notNull().references(() => organizations.id),
     defTeacherPriceTk: integer('def_teacher_price_tk').notNull(),
     defStudentPriceTk: integer('def_student_price_tk').notNull(),
     summary: text('summary'),

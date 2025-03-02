@@ -19,11 +19,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER prevent_enrollments_batch_id_update_trigger
-BEFORE UPDATE ON enrollments
+BEFORE UPDATE ON p_enrollments
 FOR EACH ROW
 EXECUTE FUNCTION prevent_enrollments_batch_id_update();
 
 CREATE TRIGGER prevent_enrollments_student_id_update_trigger
-BEFORE UPDATE ON enrollments
+BEFORE UPDATE ON p_enrollments
 FOR EACH ROW
 EXECUTE FUNCTION prevent_enrollments_student_id_update();

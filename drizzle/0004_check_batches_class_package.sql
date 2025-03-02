@@ -5,7 +5,7 @@ DECLARE
 BEGIN
     -- Get the organization_id of the referenced class package
     SELECT organization_id INTO class_package_org_id
-    FROM class_packages
+    FROM p_class_packages
     WHERE id = NEW.class_package_id;
 
     -- If no matching class package, raise an error
@@ -24,6 +24,6 @@ $$ LANGUAGE plpgsql;
 
 -- Attach the trigger to the batches table
 CREATE TRIGGER ensure_class_package_org_match
-BEFORE INSERT OR UPDATE ON batches
+BEFORE INSERT OR UPDATE ON p_batches
 FOR EACH ROW
 EXECUTE FUNCTION check_batch_organization_match();

@@ -1,16 +1,284 @@
 {
-  "id": "e9c555c7-7e00-4869-b129-fa40fdeb6d1c",
+  "id": "df7594d3-ae59-4564-ae78-b52a5be4411c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.batches": {
-      "name": "batches",
+    "public.p_accounts": {
+      "name": "p_accounts",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider_account_id": {
+          "name": "provider_account_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token_type": {
+          "name": "token_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_state": {
+          "name": "session_state",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "p_accounts_user_id_index": {
+          "name": "p_accounts_user_id_index",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "p_accounts_user_id_p_users_id_fk": {
+          "name": "p_accounts_user_id_p_users_id_fk",
+          "tableFrom": "p_accounts",
+          "tableTo": "p_users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "p_accounts_provider_provider_account_id_pk": {
+          "name": "p_accounts_provider_provider_account_id_pk",
+          "columns": [
+            "provider",
+            "provider_account_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.p_sessions": {
+      "name": "p_sessions",
+      "schema": "",
+      "columns": {
+        "session_token": {
+          "name": "session_token",
+          "type": "varchar(255)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "p_sessions_user_id_index": {
+          "name": "p_sessions_user_id_index",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "p_sessions_user_id_p_users_id_fk": {
+          "name": "p_sessions_user_id_p_users_id_fk",
+          "tableFrom": "p_sessions",
+          "tableTo": "p_users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.p_users": {
+      "name": "p_users",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "p_users_email_unique": {
+          "name": "p_users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.p_verification_tokens": {
+      "name": "p_verification_tokens",
+      "schema": "",
+      "columns": {
+        "identifier": {
+          "name": "identifier",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "p_verification_tokens_identifier_token_pk": {
+          "name": "p_verification_tokens_identifier_token_pk",
+          "columns": [
+            "identifier",
+            "token"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.p_batches": {
+      "name": "p_batches",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -22,19 +290,19 @@
         },
         "organization_id": {
           "name": "organization_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "class_package_id": {
           "name": "class_package_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "teacher_id": {
           "name": "teacher_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -67,10 +335,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "batches_organization_id_organizations_id_fk": {
-          "name": "batches_organization_id_organizations_id_fk",
-          "tableFrom": "batches",
-          "tableTo": "organizations",
+        "p_batches_organization_id_p_organizations_id_fk": {
+          "name": "p_batches_organization_id_p_organizations_id_fk",
+          "tableFrom": "p_batches",
+          "tableTo": "p_organizations",
           "columnsFrom": [
             "organization_id"
           ],
@@ -80,10 +348,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "batches_class_package_id_class_packages_id_fk": {
-          "name": "batches_class_package_id_class_packages_id_fk",
-          "tableFrom": "batches",
-          "tableTo": "class_packages",
+        "p_batches_class_package_id_p_class_packages_id_fk": {
+          "name": "p_batches_class_package_id_p_class_packages_id_fk",
+          "tableFrom": "p_batches",
+          "tableTo": "p_class_packages",
           "columnsFrom": [
             "class_package_id"
           ],
@@ -93,10 +361,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "batches_teacher_id_teachers_id_fk": {
-          "name": "batches_teacher_id_teachers_id_fk",
-          "tableFrom": "batches",
-          "tableTo": "teachers",
+        "p_batches_teacher_id_p_teachers_id_fk": {
+          "name": "p_batches_teacher_id_p_teachers_id_fk",
+          "tableFrom": "p_batches",
+          "tableTo": "p_teachers",
           "columnsFrom": [
             "teacher_id"
           ],
@@ -109,16 +377,16 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "batches_name_organization_id_unique": {
-          "name": "batches_name_organization_id_unique",
+        "p_batches_name_organization_id_unique": {
+          "name": "p_batches_name_organization_id_unique",
           "nullsNotDistinct": false,
           "columns": [
             "name",
             "organization_id"
           ]
         },
-        "batches_class_package_id_teacher_id_organization_id_unique": {
-          "name": "batches_class_package_id_teacher_id_organization_id_unique",
+        "p_batches_class_package_id_teacher_id_organization_id_unique": {
+          "name": "p_batches_class_package_id_teacher_id_organization_id_unique",
           "nullsNotDistinct": false,
           "columns": [
             "class_package_id",
@@ -131,227 +399,19 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.class_logs": {
-      "name": "class_logs",
+    "public.p_classes": {
+      "name": "p_classes",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "class_id": {
-          "name": "class_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "organization_id": {
-          "name": "organization_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "teacher_id": {
-          "name": "teacher_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "student_id": {
-          "name": "student_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "teacher_price_tk": {
-          "name": "teacher_price_tk",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "student_price_tk": {
-          "name": "student_price_tk",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "class_logs_class_id_classes_id_fk": {
-          "name": "class_logs_class_id_classes_id_fk",
-          "tableFrom": "class_logs",
-          "tableTo": "classes",
-          "columnsFrom": [
-            "class_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "class_logs_organization_id_organizations_id_fk": {
-          "name": "class_logs_organization_id_organizations_id_fk",
-          "tableFrom": "class_logs",
-          "tableTo": "organizations",
-          "columnsFrom": [
-            "organization_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "class_logs_teacher_id_teachers_id_fk": {
-          "name": "class_logs_teacher_id_teachers_id_fk",
-          "tableFrom": "class_logs",
-          "tableTo": "teachers",
-          "columnsFrom": [
-            "teacher_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "class_logs_student_id_students_id_fk": {
-          "name": "class_logs_student_id_students_id_fk",
-          "tableFrom": "class_logs",
-          "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.class_packages": {
-      "name": "class_packages",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "organization_id": {
-          "name": "organization_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "def_teacher_price_tk": {
-          "name": "def_teacher_price_tk",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "def_student_price_tk": {
-          "name": "def_student_price_tk",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "summary": {
-          "name": "summary",
           "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "class_packages_organization_id_organizations_id_fk": {
-          "name": "class_packages_organization_id_organizations_id_fk",
-          "tableFrom": "class_packages",
-          "tableTo": "organizations",
-          "columnsFrom": [
-            "organization_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "class_packages_name_organization_id_unique": {
-          "name": "class_packages_name_organization_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "name",
-            "organization_id"
-          ]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.classes": {
-      "name": "classes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "batch_id": {
           "name": "batch_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -408,10 +468,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "classes_batch_id_batches_id_fk": {
-          "name": "classes_batch_id_batches_id_fk",
-          "tableFrom": "classes",
-          "tableTo": "batches",
+        "p_classes_batch_id_p_batches_id_fk": {
+          "name": "p_classes_batch_id_p_batches_id_fk",
+          "tableFrom": "p_classes",
+          "tableTo": "p_batches",
           "columnsFrom": [
             "batch_id"
           ],
@@ -428,25 +488,233 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.enrollments": {
-      "name": "enrollments",
+    "public.p_class_logs": {
+      "name": "p_class_logs",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
-        "batch_id": {
-          "name": "batch_id",
-          "type": "integer",
+        "class_id": {
+          "name": "class_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "teacher_id": {
+          "name": "teacher_id",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "student_id": {
           "name": "student_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "teacher_price_tk": {
+          "name": "teacher_price_tk",
           "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "student_price_tk": {
+          "name": "student_price_tk",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "p_class_logs_class_id_p_classes_id_fk": {
+          "name": "p_class_logs_class_id_p_classes_id_fk",
+          "tableFrom": "p_class_logs",
+          "tableTo": "p_classes",
+          "columnsFrom": [
+            "class_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "p_class_logs_organization_id_p_organizations_id_fk": {
+          "name": "p_class_logs_organization_id_p_organizations_id_fk",
+          "tableFrom": "p_class_logs",
+          "tableTo": "p_organizations",
+          "columnsFrom": [
+            "organization_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "p_class_logs_teacher_id_p_teachers_id_fk": {
+          "name": "p_class_logs_teacher_id_p_teachers_id_fk",
+          "tableFrom": "p_class_logs",
+          "tableTo": "p_teachers",
+          "columnsFrom": [
+            "teacher_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "p_class_logs_student_id_p_students_id_fk": {
+          "name": "p_class_logs_student_id_p_students_id_fk",
+          "tableFrom": "p_class_logs",
+          "tableTo": "p_students",
+          "columnsFrom": [
+            "student_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.p_class_packages": {
+      "name": "p_class_packages",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "def_teacher_price_tk": {
+          "name": "def_teacher_price_tk",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "def_student_price_tk": {
+          "name": "def_student_price_tk",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "summary": {
+          "name": "summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "p_class_packages_organization_id_p_organizations_id_fk": {
+          "name": "p_class_packages_organization_id_p_organizations_id_fk",
+          "tableFrom": "p_class_packages",
+          "tableTo": "p_organizations",
+          "columnsFrom": [
+            "organization_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "p_class_packages_name_organization_id_unique": {
+          "name": "p_class_packages_name_organization_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name",
+            "organization_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.p_enrollments": {
+      "name": "p_enrollments",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "batch_id": {
+          "name": "batch_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -479,10 +747,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "enrollments_batch_id_batches_id_fk": {
-          "name": "enrollments_batch_id_batches_id_fk",
-          "tableFrom": "enrollments",
-          "tableTo": "batches",
+        "p_enrollments_batch_id_p_batches_id_fk": {
+          "name": "p_enrollments_batch_id_p_batches_id_fk",
+          "tableFrom": "p_enrollments",
+          "tableTo": "p_batches",
           "columnsFrom": [
             "batch_id"
           ],
@@ -492,10 +760,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "enrollments_student_id_students_id_fk": {
-          "name": "enrollments_student_id_students_id_fk",
-          "tableFrom": "enrollments",
-          "tableTo": "students",
+        "p_enrollments_student_id_p_students_id_fk": {
+          "name": "p_enrollments_student_id_p_students_id_fk",
+          "tableFrom": "p_enrollments",
+          "tableTo": "p_students",
           "columnsFrom": [
             "student_id"
           ],
@@ -508,8 +776,8 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "enrollments_batch_id_student_id_unique": {
-          "name": "enrollments_batch_id_student_id_unique",
+        "p_enrollments_batch_id_student_id_unique": {
+          "name": "p_enrollments_batch_id_student_id_unique",
           "nullsNotDistinct": false,
           "columns": [
             "batch_id",
@@ -521,25 +789,25 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.moderators": {
-      "name": "moderators",
+    "public.p_moderators": {
+      "name": "p_moderators",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "organization_id": {
           "name": "organization_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -566,10 +834,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "moderators_user_id_users_id_fk": {
-          "name": "moderators_user_id_users_id_fk",
-          "tableFrom": "moderators",
-          "tableTo": "users",
+        "p_moderators_user_id_p_users_id_fk": {
+          "name": "p_moderators_user_id_p_users_id_fk",
+          "tableFrom": "p_moderators",
+          "tableTo": "p_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -579,10 +847,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "moderators_organization_id_organizations_id_fk": {
-          "name": "moderators_organization_id_organizations_id_fk",
-          "tableFrom": "moderators",
-          "tableTo": "organizations",
+        "p_moderators_organization_id_p_organizations_id_fk": {
+          "name": "p_moderators_organization_id_p_organizations_id_fk",
+          "tableFrom": "p_moderators",
+          "tableTo": "p_organizations",
           "columnsFrom": [
             "organization_id"
           ],
@@ -595,8 +863,8 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "moderators_user_id_unique": {
-          "name": "moderators_user_id_unique",
+        "p_moderators_user_id_unique": {
+          "name": "p_moderators_user_id_unique",
           "nullsNotDistinct": false,
           "columns": [
             "user_id"
@@ -607,19 +875,19 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.organizations": {
-      "name": "organizations",
+    "public.p_organizations": {
+      "name": "p_organizations",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
         "owner_id": {
           "name": "owner_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -658,10 +926,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "organizations_owner_id_users_id_fk": {
-          "name": "organizations_owner_id_users_id_fk",
-          "tableFrom": "organizations",
-          "tableTo": "users",
+        "p_organizations_owner_id_p_users_id_fk": {
+          "name": "p_organizations_owner_id_p_users_id_fk",
+          "tableFrom": "p_organizations",
+          "tableTo": "p_users",
           "columnsFrom": [
             "owner_id"
           ],
@@ -674,15 +942,15 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "organizations_name_unique": {
-          "name": "organizations_name_unique",
+        "p_organizations_name_unique": {
+          "name": "p_organizations_name_unique",
           "nullsNotDistinct": false,
           "columns": [
             "name"
           ]
         },
-        "organizations_slug_unique": {
-          "name": "organizations_slug_unique",
+        "p_organizations_slug_unique": {
+          "name": "p_organizations_slug_unique",
           "nullsNotDistinct": false,
           "columns": [
             "slug"
@@ -693,25 +961,25 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.students": {
-      "name": "students",
+    "public.p_students": {
+      "name": "p_students",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "organization_id": {
           "name": "organization_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -762,10 +1030,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "students_user_id_users_id_fk": {
-          "name": "students_user_id_users_id_fk",
-          "tableFrom": "students",
-          "tableTo": "users",
+        "p_students_user_id_p_users_id_fk": {
+          "name": "p_students_user_id_p_users_id_fk",
+          "tableFrom": "p_students",
+          "tableTo": "p_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -775,10 +1043,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "students_organization_id_organizations_id_fk": {
-          "name": "students_organization_id_organizations_id_fk",
-          "tableFrom": "students",
-          "tableTo": "organizations",
+        "p_students_organization_id_p_organizations_id_fk": {
+          "name": "p_students_organization_id_p_organizations_id_fk",
+          "tableFrom": "p_students",
+          "tableTo": "p_organizations",
           "columnsFrom": [
             "organization_id"
           ],
@@ -791,8 +1059,8 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "students_user_id_organization_id_unique": {
-          "name": "students_user_id_organization_id_unique",
+        "p_students_user_id_organization_id_unique": {
+          "name": "p_students_user_id_organization_id_unique",
           "nullsNotDistinct": false,
           "columns": [
             "user_id",
@@ -804,25 +1072,25 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.teachers": {
-      "name": "teachers",
+    "public.p_teachers": {
+      "name": "p_teachers",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "organization_id": {
           "name": "organization_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -885,10 +1153,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "teachers_user_id_users_id_fk": {
-          "name": "teachers_user_id_users_id_fk",
-          "tableFrom": "teachers",
-          "tableTo": "users",
+        "p_teachers_user_id_p_users_id_fk": {
+          "name": "p_teachers_user_id_p_users_id_fk",
+          "tableFrom": "p_teachers",
+          "tableTo": "p_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -898,10 +1166,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "teachers_organization_id_organizations_id_fk": {
-          "name": "teachers_organization_id_organizations_id_fk",
-          "tableFrom": "teachers",
-          "tableTo": "organizations",
+        "p_teachers_organization_id_p_organizations_id_fk": {
+          "name": "p_teachers_organization_id_p_organizations_id_fk",
+          "tableFrom": "p_teachers",
+          "tableTo": "p_organizations",
           "columnsFrom": [
             "organization_id"
           ],
@@ -914,77 +1182,12 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "teachers_user_id_organization_id_unique": {
-          "name": "teachers_user_id_organization_id_unique",
+        "p_teachers_user_id_organization_id_unique": {
+          "name": "p_teachers_user_id_organization_id_unique",
           "nullsNotDistinct": false,
           "columns": [
             "user_id",
             "organization_id"
-          ]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.users": {
-      "name": "users",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "avatar": {
-          "name": "avatar",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "email": {
-          "name": "email",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "password_hash": {
-          "name": "password_hash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "users_email_unique": {
-          "name": "users_email_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "email"
           ]
         }
       },

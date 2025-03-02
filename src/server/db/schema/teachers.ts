@@ -1,11 +1,12 @@
-import { pgTable, integer, varchar, text, timestamp, serial, unique } from 'drizzle-orm/pg-core';
-import { users } from './users';
+import { varchar, text, timestamp, unique } from 'drizzle-orm/pg-core';
 import { organizations } from './organizations';
+import { createTable } from './base';
+import { users } from './auth';
 
-export const teachers = pgTable('teachers', {
-    id: serial('id').primaryKey(),
-    userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-    organizationId: integer('organization_id').notNull().references(() => organizations.id),
+export const teachers = createTable('teachers', {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    organizationId: text('organization_id').notNull().references(() => organizations.id),
     nickname: varchar('nickname').notNull(),
     summary: text('summary'),
     portfolio: text('portfolio'),

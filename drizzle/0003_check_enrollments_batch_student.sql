@@ -32,6 +32,6 @@ $$ LANGUAGE plpgsql;
 
 -- Attach the trigger to the enrollments table
 CREATE TRIGGER ensure_enrollment_org_match
-BEFORE INSERT OR UPDATE ON enrollments
+BEFORE INSERT OR UPDATE ON p_enrollments
 FOR EACH ROW
 EXECUTE FUNCTION check_enrollment_organization_match();
