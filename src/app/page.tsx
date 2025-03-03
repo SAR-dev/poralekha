@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { api, HydrateClient } from "@/trpc/server";
 import { auth } from "@/server/auth";
+import { ModeToggle } from "@/components/ModeToogle";
 
 export default async function Home() {
   const hello = await api.hello.helloText({ text: "from tRPC" });
@@ -47,6 +48,7 @@ export default async function Home() {
               <p className="text-center text-2xl text-white">
                 {session && <span>Logged in as {session.user?.name}</span>}
               </p>
+              <ModeToggle />
               <Link
                 href={session ? "/api/auth/signout" : "/api/auth/signin"}
                 className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
